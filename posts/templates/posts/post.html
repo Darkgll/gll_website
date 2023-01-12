@@ -1,0 +1,12 @@
+
+<h2>Post {{ post.id }}</h2>
+<h1>Title {{ post.title }}</h1>
+<br>
+
+<h3>{{ post.subtitle }}</h3>
+<img src="{{ post.futured_image.url }}">
+<h4>{{ post.body }}</h3>
+
+
+
+<a href="{% url 'posts:posts' %}">Back to Full List</a>

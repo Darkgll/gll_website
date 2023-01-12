@@ -1,0 +1,21 @@
+
+{% load static %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<h1>Posts</h1>
+<ul>
+    {% for post in posts%}
+        <li>
+            <h3><a href="{% url 'posts:post' post.id %}">Check out this post</a></h3>
+            <ul>{{ post.title }}</ul>
+            <ul>{{ post.author }}</ul>
+            <ul>{{ post.subtitle }}</ul>
+            <ul><img src="{{ post.futured_image.url }}"></ul>
+            <ul>{{ post.body }}</ul>
+            <p><a href="{% url 'posts:update_post' post.id %}">Update post</a></p>
+            <p><a href="{% url 'posts:delete_post' post.id %}">Delete post</a></p>
+        </li>
+    {% endfor %}
+    <p><a href="{% url 'posts:create_post' %}">Create new post</a></p>
+</ul>
