@@ -1,0 +1,11 @@
+
+{% load static %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<h1>Posts</h1>
+<ul>
+    {% for post in posts%}
+        <li>{{ post }}</li>
+    {% endfor %}
+</ul>
