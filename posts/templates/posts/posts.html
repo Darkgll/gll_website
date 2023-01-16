@@ -1,21 +1,40 @@
-
+{% extends 'main.html' %}
 {% load static %}
-<head>
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-</head>
-<h1>Posts</h1>
-<ul>
-    {% for post in posts%}
-        <li>
-            <h3><a href="{% url 'posts:post' post.id %}">Check out this post</a></h3>
-            <ul>{{ post.title }}</ul>
-            <ul>{{ post.author }}</ul>
-            <ul>{{ post.subtitle }}</ul>
-            <ul><img src="{{ post.futured_image.url }}"></ul>
-            <ul>{{ post.body }}</ul>
-            <p><a href="{% url 'posts:update_post' post.id %}">Update post</a></p>
-            <p><a href="{% url 'posts:delete_post' post.id %}">Delete post</a></p>
-        </li>
-    {% endfor %}
-    <p><a href="{% url 'posts:create_post' %}">Create new post</a></p>
-</ul>
+{% block content %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url({% static 'images/marek-okon-fpbWloKiYVY-unsplash.jpg' %})">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Clean Blog</h1>
+                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    {% for post in posts %}
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="{% url 'posts:post' post.id %}">
+                            <h2 class="post-title">{{ post.title }}</h2>
+                            <h3 class="post-subtitle">{{ post.subtitle }}</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a href="{% url 'posts:post' post.id %}">{{ post.author }}</a>
+                            on September 24, 2022
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+{% endblock %}
