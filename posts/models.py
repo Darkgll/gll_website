@@ -17,6 +17,16 @@ class Post(models.Model):
         return f'Title: "{self.title}", subtitle: "{self.subtitle}", author username: "{self.author.username}"'
 
 
+class Comment(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    body = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return f'Author username: "{self.author.username}", body: "{self.body}"'
+
+
 # class Comment(models.Model):
 #     author = models.ForeignKey(User, on_delete=models.CASCADE)
 #     body = models.TextField(max_length=1000, validators=[MaxLengthValidator(1000)])

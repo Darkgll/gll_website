@@ -30,16 +30,22 @@
                 </div>
             </div>
         </article>
+        
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    {% for comment in post.comments %}
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    {% for comment in post.comment_set.all %}
                     <!-- Post preview-->
-                    <div class="container border">
+                    <div class="post-preview">
                         <p>
-                            {{ comment.body }}
+                            {{ comment.body|linebreaks }}
                         </p>
+                        <p>{{ comment.author }}</p>
                     </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
                     {% endfor %}
                 </div>
             </div>
