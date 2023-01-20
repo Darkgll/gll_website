@@ -1,0 +1,48 @@
+{% extends 'main.html'%}
+{% block content %}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Join this Website</h1>
+                    <span class="subheading">Complete the registration.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<!-- Main Content-->
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="my-5">
+                    <form id="registerForm" method="POST">
+                        {% csrf_token %}
+                        {% for form_field in form %}
+                            <div class="form-floating">
+                                {{ form_field }}
+                                <label for="{{ form_field.label }}">{{ form_field.label }}</label>
+                            </div>
+                        {% endfor %}
+                        <br />
+                        <!-- Submit Button-->
+                        <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
