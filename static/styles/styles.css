@@ -492,6 +492,11 @@ progress {
   font-weight: 300;
 }
 
+.invalid-feedback {
+  font-size: 1rem;
+  color: red;
+}
+
 .display-1 {
   font-size: calc(1.625rem + 4.5vw);
   font-weight: 300;

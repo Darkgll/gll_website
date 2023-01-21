@@ -14,25 +14,31 @@
         </div>
     </div>
 </header>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+
 <!-- Main Content-->
 <main class="mb-4">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="my-5">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert {{ message.extra_tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
                     <form id="registerForm" method="POST">
                         {% csrf_token %}
                         {% for form_field in form %}
                             <div class="form-floating">
                                 {{ form_field }}
                                 <label for="{{ form_field.label }}">{{ form_field.label }}</label>
+                
+                                {% for error in form_field.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
                             </div>
                         {% endfor %}
                         <br />

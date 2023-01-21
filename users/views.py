@@ -24,12 +24,13 @@ def login_user(request):
 
             if user:
                 login(request, user)
+                messages.success(request, 'Welcome back!', extra_tags='alert-success')
                 return redirect('posts:posts')
             else:
-                messages.error(request, 'Username, an email or password is incorrect')
+                messages.error(request, 'Username, an email or password is incorrect', extra_tags='alert-danger')
 
         except User.DoesNotExist:
-            messages.error(request, 'Username, an email or password is incorrect')
+            messages.error(request, 'Username, an email or password is incorrect', extra_tags='alert-danger')
 
     return render(request, 'users/login-form.html')
 
@@ -49,14 +50,15 @@ def register_user(request):
             user.username = user.username.lower()
             user.save()
 
-            messages.success(request, 'Thank you for registration!')
+            messages.success(request, 'Thank you for registration!', extra_tags='alert-success')
 
             login(request, user)
             return redirect('posts:posts')
 
         else:
             messages.error(
-                request, 'Oops! Something went wrong!')
+                request, 'Oops! Something went wrong!', extra_tags='alert-danger')
 
-    context = {'form': form}
-    return render(request, 'users/register-form.html', context)
+    return render(request, 'users/register-form.html', {
+        'form': form
+        })
