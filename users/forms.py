@@ -1,5 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.forms import ModelForm
+from users.models import Profile
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -17,3 +19,9 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['email'].widget.attrs.update({'placeholder': 'Your Email address', 'type': 'email'})
         self.fields['password1'].widget.attrs.update({'placeholder': 'Your password', 'type': 'password'})
         self.fields['password2'].widget.attrs.update({'placeholder': 'Confirm your password', 'type': 'password'})
+
+
+class ProfileForm(ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['name', 'short_info', 'interests_info', 'profile_image']

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, ProfileForm
 
 # Create your views here.
 def login_user(request):
@@ -37,7 +38,8 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('users:login')
+    messages.success(request, 'You have logged out.', extra_tags='alert-info')
+    return redirect('posts:posts')
 
 
 def register_user(request):
@@ -62,3 +64,19 @@ def register_user(request):
     return render(request, 'users/register-form.html', {
         'form': form
         })
+
+
+@login_required(login_url='login')
+def edit_profile(request):
+    profile = request.user.profile
+    form = ProfileForm(instance=profile)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+
+            return redirect('posts:posts')
+
+    context = {'form': form}
+    return render(request, 'users/profile-edit.html', context)

@@ -35,7 +35,7 @@
                         </a>
                         <p class="post-meta">
                             Posted by
-                            <a href="{% url 'posts:post' post.id %}">{{ post.author }}</a>
+                            <a href="{% url 'posts:post' post.id %}">{{ post.author|title }}</a>
                             on {{ post.created }}
                         </p>
                     </div>
