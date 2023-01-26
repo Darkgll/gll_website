@@ -78,5 +78,6 @@ def edit_profile(request):
 
             return redirect('posts:posts')
 
-    context = {'form': form}
-    return render(request, 'users/profile-edit.html', context)
+    return render(request, 'users/profile-edit.html', {
+        'form': form
+        })

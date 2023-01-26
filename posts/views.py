@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Post
 from .forms import PostForm
 
 
 # Create your views here.
-def index(request):
+def posts(request):
     return render(request, 'posts/posts.html', {
         "posts": Post.objects.all()
     })
@@ -28,7 +29,7 @@ def update_post(request, post_id):
     form = PostForm(instance=post)
 
     if request.method == 'POST':
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
             return redirect('posts:posts')
@@ -38,17 +39,18 @@ def update_post(request, post_id):
     })
 
 
+@login_required(login_url='login')
 def create_post(request):
     form = PostForm()
-    current_user = request.user
+    current_user = request.user.profile
 
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             
-            project = form.save(commit=False)
-            project.author = current_user
-            project.save()
+            post = form.save(commit=False)
+            post.author = current_user
+            post.save()
             
             return redirect('posts:posts')
     return render(request, 'posts/post_form.html', {

@@ -1,12 +1,67 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url({% static 'images/marek-okon-fpbWloKiYVY-unsplash.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Create your own post!</h1>
+                    </br>
+                    <span class="subheading">Share your thougts, dreams and feelings!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
 
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="my-5">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert {{ message.extra_tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
 
-    {% for field in form %}
-        {{ field.label }} {{ field }}
-    {% endfor %}
+                    <form id="postForm" action="{% url 'posts:create_post' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        </div>
+                        <div class="form-floating">
+                            {{ form.title.errors }}
+                            <input class="form-control" type="text" autofocus="autofocus" required="required" id="{{ form.title.label }}" placeholder="{{ form.title.value }}" name='title'/>
+                            <label for="{{ form.title.label }}">{{ form.title.label }}</label>
+                        </div>
+                        <div class="form-floating">
+                            {{ form.subtitle.errors }}
+                            <input class="form-control" type="text" required="required" id="{{ form.subtitle.label }}" placeholder="{{ form.subtitle.label }}" name='subtitle'/>
+                            <label for="{{ form.subtitle.label }}">{{ form.subtitle.label }}</label>
+                        </div>
+                        <div class="mb-3">
+                            {{ form.body.errors }}
+                            <textarea class="form-control" type="text" required="required" placeholder="Your post..." name="body" rows="10"></textarea>
+                        </div>
+                        <br />
+                        <div class="mb-3">
+                            {{ form.futured_image.errors }}
+                            <label for="{{ form.futured_image.label }}" class="form-label">Upload image for a post</label>
+                            <input class="form-control form-control-lg" type="file" id="{{ form.futured_image.label }}" name="futured_image">
+                        </div>
+                        <br />
+                        <!-- Submit Button-->
+                        <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Submit Post...</button>
 
-
-    <input type="submit" value="Submit" />
-</form>
-
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
