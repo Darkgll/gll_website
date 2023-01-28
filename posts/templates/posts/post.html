@@ -11,7 +11,7 @@
                             <span class="meta">
                                 Posted by
                                 {{ post.author }}
-                                on August 24, 2022
+                                on {{ post.created }}
                             </span>
                         </div>
                     </div>
@@ -26,6 +26,9 @@
                         <p>
                             {{ post.body|linebreaks }}
                         </p>
+                    </div>
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <a class="btn btn-primary text-uppercase" href="{% url 'posts:update_post' post.id %}">Edit Post</a>
                     </div>
                 </div>
             </div>

@@ -24,6 +24,7 @@ def post(request, post_id):
     })
 
 
+@login_required(login_url='login')
 def update_post(request, post_id):
     post = Post.objects.get(id=post_id)
     form = PostForm(instance=post)
@@ -35,7 +36,8 @@ def update_post(request, post_id):
             return redirect('posts:posts')
     
     return render(request, 'posts/post_form.html', {
-        'form': form
+        'form': form,
+        'edit': True
     })
 
 

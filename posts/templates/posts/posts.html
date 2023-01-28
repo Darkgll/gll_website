@@ -43,6 +43,10 @@
             <hr class="my-4" />
             {% endfor %}
         </div>
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <a class="btn btn-primary text-uppercase" href="{% url 'posts:create_post' %}">Make new post...</a>
+        </div>
     </div>
+    <br />
 </div>
 {% endblock %}

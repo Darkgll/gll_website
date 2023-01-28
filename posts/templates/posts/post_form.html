@@ -2,6 +2,25 @@
 {% load static %}
 {% block content %}
 <!-- Page Header-->
+{% if edit %}
+<header class="masthead" style="background-image: url({{ form.futured_image.value.url }})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>{{ form.title.value }}</h1>
+                    <h2 class="subheading">{{ form.subtitle.value }}</h2>
+                    <span class="meta">
+                        Posted by
+                        {{ form.author.value }}
+                        on {{ form.created.value }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% else %}
 <header class="masthead" style="background-image: url({% static 'images/marek-okon-fpbWloKiYVY-unsplash.jpg' %})">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -15,6 +34,7 @@
         </div>
     </div>
 </header>
+{% endif %}
 <!-- Main Content-->
 
 <main class="mb-4">
@@ -30,23 +50,23 @@
                     </div>
                     {% endfor %}
                     {% endif %}
-
-                    <form id="postForm" action="{% url 'posts:create_post' %}" method="POST" enctype="multipart/form-data">
+                    
+                    <form id="postForm" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         </div>
                         <div class="form-floating">
                             {{ form.title.errors }}
-                            <input class="form-control" type="text" autofocus="autofocus" required="required" id="{{ form.title.label }}" placeholder="{{ form.title.value }}" name='title'/>
+                            <input class="form-control" type="text" autofocus="autofocus" required="required" id="{{ form.title.label }}" value="{{ form.title.value }}" placeholder="{{ form.title.value }}" name='title'/>
                             <label for="{{ form.title.label }}">{{ form.title.label }}</label>
                         </div>
                         <div class="form-floating">
                             {{ form.subtitle.errors }}
-                            <input class="form-control" type="text" required="required" id="{{ form.subtitle.label }}" placeholder="{{ form.subtitle.label }}" name='subtitle'/>
+                            <input class="form-control" type="text" required="required" id="{{ form.subtitle.label }}" value="{{ form.subtitle.value }}" placeholder="{{ form.subtitle.label }}" name='subtitle'/>
                             <label for="{{ form.subtitle.label }}">{{ form.subtitle.label }}</label>
                         </div>
                         <div class="mb-3">
                             {{ form.body.errors }}
-                            <textarea class="form-control" type="text" required="required" placeholder="Your post..." name="body" rows="10"></textarea>
+                            <textarea class="form-control" type="text" required="required" placeholder="Your post..." name="body" rows="10">{{ form.body.value }}</textarea>
                         </div>
                         <br />
                         <div class="mb-3">
