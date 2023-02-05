@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 
 
 # Create your views here.
@@ -15,12 +15,23 @@ def posts(request):
 def post(request, post_id):
     try:
         post = Post.objects.get(id=post_id)
+        form = CommentForm
+        current_user = request.user.profile
     except Post.DoesNotExist:
         raise Http404("Post not found.")
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = current_user
+            comment.save()
+            return redirect('posts:post', post_id=post_id)
     
     return render(request, "posts/post.html", {
         "post": post,
-        # TODO comments
+        "form": form
     })
 
 

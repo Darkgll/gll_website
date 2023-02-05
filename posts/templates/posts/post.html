@@ -33,7 +33,6 @@
                 </div>
             </div>
         </article>
-        
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
@@ -42,14 +41,34 @@
                     {% for comment in post.comment_set.all %}
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <p>
-                            {{ comment.body|linebreaks }}
-                        </p>
-                        <p>{{ comment.author }}</p>
+                        <p class="mb-0 border border-primary">{{ comment.author|title }}</p>
+                        <div class="p-2 bg-light border border-primary">
+                            <p>
+                                {{ comment.body|linebreaks }}
+                            </p>
+                        </div>
                     </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
                     {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="my-5">
+                        <form id="postForm" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            </div>
+                            <p>Share your thougts...</p>
+                            <div class="form-floating">
+                                {{ form.body.errors }}
+                                <textarea class="form-control border" type="text" required="required" placeholder="Your post..." name="body" rows="2"></textarea>
+                            </div>
+                            <br />
+                            <!-- Submit Button-->
+                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Send comment...</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
